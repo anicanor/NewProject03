@@ -21,15 +21,23 @@ char Direction::get() const
 bool Direction::change()
 {
     if( dir == 'W' )
+    {
             checkAll = false;
+            }
     else
     {
             if( dir == 'N' )
+            {
                     dir = 'E';
+                    }
             else if( dir == 'E' )
+            {
                     dir = 'S';
+                    }
             else
+            {                      
                     dir = 'W';
-    }
+                    }                                        
+    } 
     return checkAll;
 }
