@@ -13,7 +13,6 @@
 
 using namespace std;
 
-//From project 2
 vector<string> split( const string& s , char delimiter )
 {
    vector<string> tokens;         // vector of tokens
@@ -21,8 +20,15 @@ vector<string> split( const string& s , char delimiter )
    istringstream tokenStream(s);  // an input string stream
    
    while( getline( tokenStream , token , delimiter ) )
+   {
+        size_t found = token.find('\r');
+        if (found != string::npos)
+        {
+            token.erase(found);
+        }
         tokens.push_back(token);    // add found token
-
+   }
+   
    return tokens;
 }
 
@@ -35,7 +41,7 @@ int main()
     string blank; //will take in an input from the user to make sure they're still inputing
     
     //each loop will solve for one maze at a time. After each maze, count will increase
-    while(cin >> blank)
+    do
     {
         //Will fill up the maze by creating a vector of each line ten times. It will then convert each vector into the maze each time
         Maze myMaze;
@@ -49,31 +55,34 @@ int main()
 
             myMaze.fill( listOfTokens, y ); //fills in row y with the given vector of tokens
         }
-    
+  /*  DEBUG
         //Handles the navigation of the maze and will determine the path to the goal.
         pathHolder.push( myMaze.getStart() );
         while( !pathHolder.empty() && !atGoal)
         {
-                cur = pathHolder.pop();
-                do //Will continue to loop until all directions of checked
+                cur = pathHolder.top();
+                pathHolder.pop();
+                do
                 {
+                        cout<<"start"<<endl;
                         step = cur.Go();
-                        if( myMaze.isGoal( step ) ) //Checks if step is on a goal
+                        if( myMaze.isGoal( step ) )
                         {
                                 pathHolder.push(step);
                                 atGoal = true;
                         }
-                        else if( myMaze.isValid( step ) ) //Checks if step is a hall/not visited
+                        else if( myMaze.isValid( step ) )
                         {
+                        
                                 myMaze.setIsVisited( step );
                                 cur.Turn();
                                 pathHolder.push( cur );
                                 cur = step;
                         }
                 }
-                while( cur.Turn() ); //My Turn() function automatically changes direction and checks if all directions we checked
+                while( cur.Turn() );
         }
-    
+   */ 
         //Prints out the maze. Will note if it was correct or not
         if( atGoal == true )
         {
@@ -81,7 +90,10 @@ int main()
 
                 //Will mark the certain cells in the maze as the path taken to the goal
                 while( !pathHolder.empty() )
-                    myMaze.path( pathHolder.pop() );
+                {
+                    myMaze.path( pathHolder.top() );
+                    pathHolder.pop();
+                }
 
                 myMaze.print();
         }
@@ -91,7 +103,7 @@ int main()
                 myMaze.print();
         }
         count++;
-    }
+    }while(getline( cin, blank )); //Will read the blank space that seperates each maze. If that blank space isn't present, then there're probably no more mazes
 
     return 0;
 }
