@@ -75,21 +75,25 @@ Location Location::Go() const
         if ( dir.get() == 'N' )
         {
                 step.set( row, col - 1 );
+                step.setDir( dir );
                 return step;
         }
         else if ( dir.get() == 'E' )
         {
                 step.set( row + 1, col );
+                step.setDir( dir );
                 return step;
         }
         else if ( dir.get() == 'S' )
         {
                 step.set( row,  col - 1 );
+                step.setDir( dir );
                 return step;
         }
         else
         {
                 step.set( row - 1, col );
+                step.setDir( dir );
                 return step;
         }
 }
