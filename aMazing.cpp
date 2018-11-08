@@ -13,6 +13,7 @@
 
 using namespace std;
 
+//From project 2
 vector<string> split( const string& s , char delimiter )
 {
    vector<string> tokens;         // vector of tokens
@@ -54,15 +55,15 @@ int main()
         while( !pathHolder.empty() && !atGoal)
         {
                 cur = pathHolder.pop();
-                do
+                do //Will continue to loop until all directions of checked
                 {
                         step = cur.Go();
-                        if( myMaze.isGoal( step ) )
+                        if( myMaze.isGoal( step ) ) //Checks if step is on a goal
                         {
                                 pathHolder.push(step);
                                 atGoal = true;
                         }
-                        else if( myMaze.isValid( step ) )
+                        else if( myMaze.isValid( step ) ) //Checks if step is a hall/not visited
                         {
                                 myMaze.setIsVisited( step );
                                 cur.Turn();
@@ -70,7 +71,7 @@ int main()
                                 cur = step;
                         }
                 }
-                while( cur.Turn() );
+                while( cur.Turn() ); //My Turn() function automatically changes direction and checks if all directions we checked
         }
     
         //Prints out the maze. Will note if it was correct or not
